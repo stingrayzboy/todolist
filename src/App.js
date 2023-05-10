@@ -6,6 +6,8 @@ import "bootstrap/dist/js/bootstrap.js";
 import Todos from "./Components/Todos";
 import { useEffect, useState } from "react";
 import AddTodo from "./Components/AddTodo";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import About from "./Components/About";
 
 function App() {
   let initTodo;
@@ -46,16 +48,26 @@ function App() {
     setTodos([...todos, newtodo]);
   };
   return (
-    <>
+    <BrowserRouter>
       <Nav></Nav>
       <main className="flex-shrink-0">
         <div className="container">
-          <AddTodo addTodo={onAdd}></AddTodo>
-          <Todos todos={todos} onDelete={onDelete} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <AddTodo addTodo={onAdd}></AddTodo>
+                  <Todos todos={todos} onDelete={onDelete} />
+                </>
+              }
+            />
+            <Route path="/about" element={<About />} />
+          </Routes>
         </div>
       </main>
       <Footer></Footer>
-    </>
+    </BrowserRouter>
   );
 }
 
