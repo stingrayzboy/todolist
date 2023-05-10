@@ -7,8 +7,11 @@ const AddTodo = (props) => {
     event.preventDefault();
     if (!title || !desc) {
       alert("Please fill the form!!");
+    } else {
+      props.addTodo(title, desc);
+      setDesc("");
+      setTitle("");
     }
-    props.addTodo(title, desc);
   };
   return (
     <>

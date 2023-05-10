@@ -4,27 +4,23 @@ import Nav from "./Layout/Nav";
 import Footer from "./Layout/Footer";
 import "bootstrap/dist/js/bootstrap.js";
 import Todos from "./Components/Todos";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTodo from "./Components/AddTodo";
 
 function App() {
-  const [todos, setTodos] = useState([
-    {
-      sno: 1,
-      title: "Go to the Market",
-      desc: "Market Jaana ha Aj Bhaaji Laane",
-    },
-    {
-      sno: 2,
-      title: "Go Back Home",
-      desc: "Ghar Pe aake Khana Bana le",
-    },
-    {
-      sno: 3,
-      title: "Sleep",
-      desc: "Sooja Chaddar leke",
-    },
-  ]);
+  let initTodo;
+  if (localStorage.getItem("todos") === null) {
+    initTodo = [];
+  } else {
+    initTodo = JSON.parse(localStorage.getItem("todos"));
+  }
+
+  const [todos, setTodos] = useState(initTodo);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
   const onDelete = (todo) => {
     setTodos(
       todos.filter((e) => {
@@ -32,6 +28,7 @@ function App() {
       })
     );
   };
+
   const onAdd = (title, desc) => {
     console.log(title, desc);
     let sno;
